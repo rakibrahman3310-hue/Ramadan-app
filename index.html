@@ -226,9 +226,10 @@
         cards:{fajr:document.getElementById('c-fajr'), dhuhr:document.getElementById('c-dhuhr'), asr:document.getElementById('c-asr'), maghrib:document.getElementById('c-maghrib'), isha:document.getElementById('c-isha')} 
     };
     
-    const RAMADAN_START = new Date('2026-02-19T00:00:00'); 
+    let timerInterval = null; // Timer control variable
+    const RAMADAN_START = new Date('2026-02-19T00:00:00'); // Ramadan 2026
 
-    // --- RAKAT & NIYAT DATA (UPDATED) ---
+    // --- RAKAT & NIYAT DATA ---
     const prayerDetails = {
         'Fajr': {
             title: 'ফজর', total: 'মোট ৪ রাকাত',
@@ -337,7 +338,7 @@
         }
     };
 
-    // --- MODAL FUNCTIONS (UPDATED) ---
+    // --- MODAL FUNCTIONS ---
     let currentPrayerData = null;
 
     function openDetails(pName) {
@@ -438,7 +439,10 @@
         document.getElementById('maghrib').innerText = fmt(t.Maghrib); 
         document.getElementById('isha').innerText = fmt(t.Isha);
 
-        const diffDays = Math.floor((now - RAMADAN_START)/86400000)+1;
+        // Fixed Ramadan Days Calculation
+        const diffTime = now - RAMADAN_START;
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
         const isRamadan = diffDays >= 1 && diffDays <= 30;
 
         if(isRamadan) {
@@ -452,7 +456,10 @@
     }
 
     function run(times, mode) {
-        setInterval(()=>{
+        // Stop any existing timer to prevent flickering
+        if(timerInterval) clearInterval(timerInterval);
+
+        timerInterval = setInterval(()=>{
             const now = new Date();
             const f=getD(times.Fajr), d=getD(times.Dhuhr), a=getD(times.Asr), m=getD(times.Maghrib), i=getD(times.Isha);
             let trg, l, act;
@@ -467,19 +474,23 @@
             if(act) els.cards[act].classList.add('active');
 
             const diff = trg - now;
+            
+            // Safety check for negative diff (prevents glitches)
+            if (diff < 0) return;
+
             const h=Math.floor((diff/3600000)%24), mn=Math.floor((diff/60000)%60), s=Math.floor((diff/1000)%60);
             els.timer.innerText = `${pad(h)}:${pad(mn)}:${pad(s)}`;
             els.lbl.innerText = l;
             els.target.innerText = `ওয়াক্ত: ${trg.getHours()%12||12}:${pad(trg.getMinutes())}`;
 
             // --- RED ALERT (LESS THAN 20 MIN) ---
-            if(diff < 1200000 && diff > 0) { // 1200000 ms = 20 minutes
-                els.timer.style.color = '#ef4444'; // Red color
+            if(diff < 1200000 && diff > 0) { 
+                els.timer.style.color = '#ef4444'; 
                 els.lbl.style.color = '#ef4444';
                 els.timerBox.style.borderColor = '#ef4444';
             } else {
                 els.timer.style.color = '#fff';
-                els.lbl.style.color = '#fbbf24'; // Restore Gold
+                els.lbl.style.color = '#fbbf24'; 
                 els.timerBox.style.borderColor = 'rgba(251, 191, 36, 0.3)';
             }
 

@@ -2,553 +2,290 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ramadan Pro Ampang</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>প্রিমিয়াম মালয় ভাষা শিক্ষক</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        :root { --bg: #0f172a; --card: #1e293b; --gold: #fbbf24; --text: #f1f5f9; --mute: #94a3b8; --danger: #ef4444; }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --primary-color: #2563eb;
+            --secondary-color: #10b981;
+            --border-color: #e5e7eb;
+            --hover-bg: #f3f4f6;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --text-color: #f9fafb;
+            --primary-color: #3b82f6;
+            --secondary-color: #10b981;
+            --border-color: #374151;
+            --hover-bg: #374151;
+        }
+
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 20px; transition: 0.3s; }
+        .container { max-width: 650px; margin: auto; background: var(--card-bg); padding: 25px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); transition: 0.3s; }
         
-        body {
-            font-family: 'Hind Siliguri', sans-serif; font-weight: 500;
-            background: radial-gradient(circle at top, #1e293b, #0f172a);
-            color: var(--text); margin: 0; padding: 15px; min-height: 100vh; display: flex; justify-content: center;
-        }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 15px; }
+        .header h2 { margin: 0; font-size: 22px; }
+        .theme-btn { background: none; border: none; font-size: 24px; color: var(--text-color); cursor: pointer; }
+
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; background: var(--bg-color); padding: 5px; border-radius: 10px; }
+        .tab-btn { flex: 1; padding: 10px; border: none; background: transparent; color: var(--text-color); font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.2s; }
+        .tab-btn.active { background: var(--primary-color); color: white; }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Translator Styles */
+        .input-box { position: relative; margin-bottom: 15px; }
+        textarea { width: 100%; height: 120px; padding: 15px; padding-right: 45px; font-size: 16px; background: var(--bg-color); color: var(--text-color); border: 1px solid var(--border-color); border-radius: 12px; box-sizing: border-box; resize: none; outline: none; transition: 0.3s; }
+        textarea:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2); }
+        .mic-btn { position: absolute; right: 15px; bottom: 15px; background: none; border: none; color: #ef4444; font-size: 22px; cursor: pointer; }
         
-        /* English Font for ALL numbers */
-        .num { font-family: 'Oswald', sans-serif; letter-spacing: 1px; }
-        
-        .app { width: 100%; max-width: 480px; padding-bottom: 90px; }
-        
-        header { text-align: center; margin-bottom: 20px; }
-        h1 { color: var(--gold); margin: 0; font-size: 28px; font-weight: 700; text-shadow: 0 2px 10px rgba(251, 191, 36, 0.2); }
-        
-        /* Alert Box */
-        .alert { 
-            padding: 10px; background: rgba(16,185,129,0.1); color: #34d399; 
-            text-align: center; border-radius: 10px; margin-bottom: 15px; display: none; 
-            font-weight: 600; border: 1px solid rgba(16,185,129,0.2); font-size: 14px;
-        }
+        .btn-translate { width: 100%; padding: 14px; background-color: var(--primary-color); color: white; border: none; border-radius: 12px; cursor: pointer; font-size: 18px; font-weight: bold; transition: 0.2s; }
+        .btn-translate:hover { opacity: 0.9; }
 
-        /* Timer Box */
-        .timer-box {
-            background: var(--bg); border: 1px solid rgba(251, 191, 36, 0.3);
-            border-radius: 16px; padding: 20px 0; text-align: center; margin-bottom: 20px;
-            box-shadow: 0 0 35px rgba(0,0,0,0.4); transition: border-color 0.3s;
-        }
-        .timer-display { font-family: 'Oswald', sans-serif; font-size: 50px; font-weight: 700; color: #fff; line-height: 1; transition: color 0.3s; }
-        .timer-lbl { font-size: 15px; color: var(--gold); margin-top: 8px; font-weight: 600; letter-spacing: 0.5px; transition: color 0.3s; }
+        .result-box { margin-top: 20px; padding: 20px; background: var(--hover-bg); border-radius: 12px; position: relative; min-height: 80px; border-left: 5px solid var(--primary-color); }
+        .result-text { font-size: 20px; font-weight: bold; margin-bottom: 10px; padding-right: 60px; word-wrap: break-word; }
+        .action-btns { position: absolute; right: 15px; top: 15px; }
+        .action-btns button { background: none; border: none; font-size: 20px; cursor: pointer; margin-left: 10px; color: var(--text-color); opacity: 0.7; }
+        .action-btns button:hover { opacity: 1; color: var(--primary-color); }
+        .loading { display: none; text-align: center; color: var(--primary-color); margin-top: 10px; font-weight: bold; }
 
-        /* Small Grid System */
-        .grid { display: flex; justify-content: space-between; gap: 6px; margin-bottom: 20px; }
-        .card { 
-            background: var(--card); padding: 8px 4px; border-radius: 10px; 
-            text-align: center; border: 1px solid rgba(255,255,255,0.08); 
-            flex: 1; min-width: 0; cursor: pointer; transition: transform 0.1s;
-        }
-        .card:active { transform: scale(0.95); }
-        .card h3 { margin: 0; font-size: 10px; font-weight: 700; color: var(--mute); text-transform: uppercase; margin-bottom: 3px;}
-        .card p { margin: 0; font-size: 15px; font-weight: 700; color: #fff; } 
-        .card.active { border-color: var(--gold); background: rgba(251, 191, 36, 0.15); }
-        .card.active p { color: var(--gold); }
+        /* Phrase & Dictionary Styles */
+        .category-title { font-size: 18px; font-weight: bold; margin: 20px 0 10px 0; color: var(--secondary-color); }
+        .phrase-list { list-style: none; padding: 0; margin: 0; }
+        .phrase-item { background: var(--hover-bg); padding: 12px 15px; margin-bottom: 8px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border-color); }
+        .phrase-bn { font-size: 14px; color: var(--text-color); opacity: 0.8; margin-bottom: 4px; display: block; }
+        .phrase-ms { font-size: 16px; font-weight: bold; color: var(--primary-color); display: block; }
+        .phrase-item i { cursor: pointer; color: var(--text-color); opacity: 0.6; }
+        .phrase-item i:hover { color: var(--primary-color); opacity: 1; }
 
-        /* Dua Section */
-        .dua-section { 
-            background: var(--card); border-radius: 14px; padding: 12px; 
-            margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.08); 
-        }
-        .dua-box { 
-            background: rgba(255,255,255,0.03); padding: 10px; border-radius: 8px; 
-            margin-bottom: 8px; border-left: 2px solid var(--gold); 
-        }
-        .dua-title { 
-            color: var(--gold); font-weight: 700; font-size: 14px; 
-            margin-bottom: 4px; display: flex; align-items: center; gap: 6px; 
-        }
-        .dua-text { font-size: 13px; line-height: 1.5; color: #e2e8f0; margin-bottom: 4px; font-style: normal; }
-        .dua-mean { font-size: 11px; color: #64748b; line-height: 1.4; }
-
-        /* Quran Section */
-        .quran { background: var(--card); border-radius: 14px; padding: 12px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.08); }
-        .quran-title { color:var(--gold); font-weight:700; margin-bottom:10px; font-size: 15px; }
-        .item { 
-            display: flex; justify-content: space-between; padding: 10px 12px; font-size: 14px; font-weight: 600;
-            background: rgba(255,255,255,0.03); margin-bottom: 6px; border-radius: 8px; cursor: pointer;
-        }
-        .item.playing { border: 1px solid var(--gold); background: rgba(251, 191, 36, 0.15); color: var(--gold); }
-
-        /* Sticky Player */
-        .bar { 
-            position: fixed; bottom: 0; left: 0; right: 0; background: rgba(15, 23, 42, 0.95); 
-            backdrop-filter: blur(10px);
-            padding: 10px 20px; display: none; align-items: center; justify-content: space-between; 
-            border-top: 1px solid rgba(255,255,255,0.1); z-index: 99; 
-        }
-        .btn { background: none; border: none; color: var(--gold); font-size: 26px; padding: 0; cursor: pointer; }
-
-        /* Status Text */
-        .status-text { text-align: center; font-size: 11px; color: #64748b; margin-top: 20px; font-weight: 600; }
-
-        /* --- MODAL POPUP STYLES --- */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); z-index: 1000; display: none;
-            justify-content: center; align-items: center;
-        }
-        .modal-content {
-            background: #1e293b; width: 90%; max-width: 350px; max-height: 80vh; overflow-y: auto;
-            padding: 20px; border-radius: 16px; border: 1px solid var(--gold);
-            text-align: center; position: relative;
-            box-shadow: 0 0 40px rgba(251, 191, 36, 0.2);
-        }
-        .close-modal {
-            position: absolute; top: 10px; right: 15px; font-size: 24px;
-            color: var(--mute); cursor: pointer;
-        }
-        .modal-title { color: var(--gold); font-size: 22px; font-weight: 700; margin-bottom: 5px; }
-        .modal-subtitle { color: #fff; font-size: 14px; margin-bottom: 15px; font-weight: 600; }
-        
-        /* Updated Rakat List Styles */
-        .rakat-list { text-align: left; background: rgba(0,0,0,0.2); padding: 5px; border-radius: 10px; margin-bottom: 15px; }
-        .rakat-item { 
-            display: flex; justify-content: space-between; 
-            padding: 10px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #e2e8f0; font-size: 15px;
-            cursor: pointer; border-radius: 6px; transition: all 0.2s;
-        }
-        .rakat-item:hover { background: rgba(255,255,255,0.05); }
-        .rakat-item:last-child { border-bottom: none; }
-        .rakat-item.selected { background: rgba(251, 191, 36, 0.15); border: 1px solid rgba(251, 191, 36, 0.3); }
-        
-        .rakat-count { font-family: 'Oswald', sans-serif; color: var(--gold); font-weight: 700; }
-        .total-badge {
-            background: var(--gold); color: #000; font-weight: 700;
-            padding: 5px 15px; border-radius: 20px; display: inline-block; margin-bottom: 15px;
-        }
-
-        /* Niyat Section inside Modal */
-        .niyat-header {
-            font-size: 14px; color: var(--gold); font-weight: 700; margin-bottom: 8px; 
-            border-bottom: 1px solid rgba(251, 191, 36, 0.3); padding-bottom: 5px; display: inline-block;
-        }
-        .niyat-content {
-            background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px;
-            text-align: left; border-left: 3px solid var(--gold); min-height: 100px;
-        }
-        .niyat-ar { color: #fff; font-style: italic; font-size: 14px; margin-bottom: 8px; line-height: 1.6; }
-        .niyat-bn { color: #94a3b8; font-size: 13px; line-height: 1.5; }
-        .tap-hint { font-size: 11px; color: var(--mute); margin-top: 5px; font-style: italic; }
+        .dict-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .dict-card { background: var(--hover-bg); padding: 15px; border-radius: 8px; text-align: center; border: 1px solid var(--border-color); }
+        .dict-ms { font-size: 18px; font-weight: bold; color: var(--primary-color); }
+        .dict-bn { font-size: 14px; color: var(--text-color); opacity: 0.8; margin-top: 5px; }
     </style>
 </head>
 <body>
 
-<div class="app">
-    <header>
-        <h1>নামাজ ও রমজান</h1>
-        <div style="font-size: 13px; color: #94a3b8; margin-top: 5px; font-weight: 600;" id="date">...</div>
-    </header>
-
-    <div class="alert" id="alert">রমজান শুরু হতে বাকি...</div>
-
-    <div class="timer-box" id="timer-box">
-        <div class="timer-display" id="timer">--:--:--</div>
-        <div class="timer-lbl" id="lbl">...</div>
-        <div class="num" style="font-size: 13px; color: #94a3b8; margin-top: 5px;" id="target"></div>
+<div class="container">
+    <div class="header">
+        <h2>🇲🇾 মালয় ভাষা প্রো</h2>
+        <button class="theme-btn" onclick="toggleTheme()" id="themeIcon"><i class="fas fa-moon"></i></button>
     </div>
 
-    <div class="grid">
-        <div class="card" onclick="openDetails('Fajr')" id="c-fajr"><h3>ফজর</h3><p class="num" id="fajr">--:--</p></div>
-        <div class="card" onclick="openDetails('Dhuhr')" id="c-dhuhr"><h3>জোহর</h3><p class="num" id="dhuhr">--:--</p></div>
-        <div class="card" onclick="openDetails('Asr')" id="c-asr"><h3>আসর</h3><p class="num" id="asr">--:--</p></div>
-        <div class="card" onclick="openDetails('Maghrib')" id="c-maghrib"><h3>মাগরিব</h3><p class="num" id="maghrib">--:--</p></div>
-        <div class="card" onclick="openDetails('Isha')" id="c-isha"><h3>এশা</h3><p class="num" id="isha">--:--</p></div>
+    <div class="tabs">
+        <button class="tab-btn active" onclick="openTab('translator')">অনুবাদক</button>
+        <button class="tab-btn" onclick="openTab('phrases')">দরকারি বাক্য</button>
+        <button class="tab-btn" onclick="openTab('dictionary')">কথ্য শর্টকাট</button>
     </div>
 
-    <div class="dua-section">
-        <div class="dua-box">
-            <div class="dua-title">🌙 সেহরির নিয়ত</div>
-            <div class="dua-text">নাওয়াইতু আন আছুমা গাদাম, মিন শাহরি রমাদানাল মুবারাকি ফারদাল্লাকা, ইয়া আল্লাহু ফাতাকাব্বাল মিন্নি, ইন্নাকা আনতাস সামিউল আলিম।</div>
-            <div class="dua-mean">অর্থ: হে আল্লাহ! আমি আগামীকাল পবিত্র রমজানের রোজা রাখার নিয়ত করলাম। আপনি আমার পক্ষ থেকে তা কবুল করুন।</div>
+    <div id="translator" class="tab-content active">
+        <div class="input-box">
+            <textarea id="bengaliText" placeholder="এখানে বাংলায় লিখুন..."></textarea>
+            <button class="mic-btn" onclick="startDictation()"><i class="fas fa-microphone"></i></button>
         </div>
-        <div class="dua-box" style="margin-bottom: 0;">
-            <div class="dua-title">🤲 ইফতারের দোয়া</div>
-            <div class="dua-text">আল্লাহুম্মা লাকা ছুমতু ওয়া আলা রিযক্বিকা আফতারতু বিরাহমাতিকা ইয়া আরহামার রাহিমিন।</div>
-            <div class="dua-mean">অর্থ: হে আল্লাহ! আমি আপনারই সন্তুষ্টির জন্য রোজা রেখেছি এবং আপনার দেওয়া রিজিক দ্বারা ইফতার করছি।</div>
-        </div>
-    </div>
-
-    <div class="quran">
-        <div class="quran-title">🎧 তিলাওয়াত (রিজুম হবে)</div>
-        <div class="item" onclick="play('https://server8.mp3quran.net/afs/036.mp3','সূরা ইয়াসিন',this)"><div>সূরা ইয়াসিন</div><div>▶</div></div>
-        <div class="item" onclick="play('https://server8.mp3quran.net/afs/055.mp3','সূরা আর-রহমান',this)"><div>সূরা আর-রহমান</div><div>▶</div></div>
-        <div class="item" onclick="play('https://server8.mp3quran.net/afs/067.mp3','সূরা মুলক',this)"><div>সূরা মুলক</div><div>▶</div></div>
-    </div>
-    
-    <div class="status-text">
-        <span id="loc-status">📍 লোড হচ্ছে...</span>
-    </div>
-</div>
-
-<div class="bar" id="bar">
-    <div style="font-size:14px; font-weight: 600; color:var(--gold);" id="now-playing">...</div>
-    <button class="btn" onclick="toggle()" id="play-btn">❚❚</button>
-</div>
-<audio id="audio"></audio>
-
-<div class="modal-overlay" id="modal" onclick="closeModal(event)">
-    <div class="modal-content">
-        <span class="close-modal" onclick="document.getElementById('modal').style.display='none'">&times;</span>
-        <div class="modal-title" id="m-title">নামাজ</div>
-        <div class="modal-subtitle">রাকাতের বিবরণ ও নিয়ত</div>
-        <div class="total-badge" id="m-total">মোট ...</div>
+        <button class="btn-translate" onclick="translateText()">অনুবাদ করুন</button>
+        <div class="loading" id="loadingText">অপেক্ষা করুন...</div>
         
-        <div class="rakat-list" id="m-list">
+        <div class="result-box">
+            <div style="font-size: 12px; opacity: 0.7; margin-bottom: 5px;">গুগল অনুবাদ (ফরমাল):</div>
+            <div class="result-text" id="malayResult">ফলাফল...</div>
+            <div class="action-btns">
+                <button onclick="speakMalay(document.getElementById('malayResult').innerText)"><i class="fas fa-volume-up"></i></button>
+                <button onclick="copyText(document.getElementById('malayResult').innerText)"><i class="fas fa-copy"></i></button>
             </div>
-        <div class="tap-hint">👆 নিয়ত দেখতে রাকাতে ক্লিক করুন</div>
+        </div>
+    </div>
 
-        <div style="margin-top: 20px;">
-            <div class="niyat-header" id="n-head">নিয়ত</div>
-            <div class="niyat-content" id="m-niyat">
-                <div class="niyat-ar" id="n-ar">...</div>
-                <div class="niyat-bn" id="n-bn">...</div>
+    <div id="phrases" class="tab-content">
+        <div class="category-title"><i class="fas fa-briefcase"></i> কাজের জায়গায় (Tempat Kerja)</div>
+        <ul class="phrase-list">
+            <li class="phrase-item">
+                <div>
+                    <span class="phrase-bn">বস, আমি আজ ওভারটাইম করব।</span>
+                    <span class="phrase-ms">Bos, hari ini saya nak buat OT.</span>
+                </div>
+                <i class="fas fa-volume-up" onclick="speakMalay('Bos, hari ini saya nak buat OT.')"></i>
+            </li>
+            <li class="phrase-item">
+                <div>
+                    <span class="phrase-bn">আমার আগামীকাল ছুটি লাগবে।</span>
+                    <span class="phrase-ms">Esok saya nak cuti.</span>
+                </div>
+                <i class="fas fa-volume-up" onclick="speakMalay('Esok saya nak cuti.')"></i>
+            </li>
+            <li class="phrase-item">
+                <div>
+                    <span class="phrase-bn">কাজ শেষ, আমি এখন ফিরে যাব।</span>
+                    <span class="phrase-ms">Kerja dah siap, saya nak balik.</span>
+                </div>
+                <i class="fas fa-volume-up" onclick="speakMalay('Kerja dah siap, saya nak balik.')"></i>
+            </li>
+        </ul>
+
+        <div class="category-title"><i class="fas fa-shopping-cart"></i> কেনাকাটা ও বাজার (Pasar)</div>
+        <ul class="phrase-list">
+            <li class="phrase-item">
+                <div>
+                    <span class="phrase-bn">ভাই, এটার দাম কত?</span>
+                    <span class="phrase-ms">Bang, ini berapa harga?</span>
+                </div>
+                <i class="fas fa-volume-up" onclick="speakMalay('Bang, ini berapa harga?')"></i>
+            </li>
+            <li class="phrase-item">
+                <div>
+                    <span class="phrase-bn">একটু কমানো যাবে কি?</span>
+                    <span class="phrase-ms">Boleh kurang sikit tak?</span>
+                </div>
+                <i class="fas fa-volume-up" onclick="speakMalay('Boleh kurang sikit tak?')"></i>
+            </li>
+        </ul>
+
+        <div class="category-title"><i class="fas fa-notes-medical"></i> স্বাস্থ্য ও জরুরি (Kecemasan)</div>
+        <ul class="phrase-list">
+            <li class="phrase-item">
+                <div>
+                    <span class="phrase-bn">আমার শরীর খারাপ লাগছে।</span>
+                    <span class="phrase-ms">Saya rasa tak sihat.</span>
+                </div>
+                <i class="fas fa-volume-up" onclick="speakMalay('Saya rasa tak sihat.')"></i>
+            </li>
+            <li class="phrase-item">
+                <div>
+                    <span class="phrase-bn">আমাকে ক্লিনিকে যেতে হবে।</span>
+                    <span class="phrase-ms">Saya kena pergi klinik.</span>
+                </div>
+                <i class="fas fa-volume-up" onclick="speakMalay('Saya kena pergi klinik.')"></i>
+            </li>
+        </ul>
+    </div>
+
+    <div id="dictionary" class="tab-content">
+        <p style="font-size: 14px; opacity: 0.8; margin-top: 0;">স্থানীয়রা প্রতিদিন যে শর্টকাট শব্দগুলো ব্যবহার করে:</p>
+        <div class="dict-grid">
+            <div class="dict-card">
+                <div class="dict-ms">Nak</div>
+                <div class="dict-bn">চাই (Mahu এর শর্টকাট)</div>
+            </div>
+            <div class="dict-card">
+                <div class="dict-ms">Tak</div>
+                <div class="dict-bn">না (Tidak এর শর্টকাট)</div>
+            </div>
+            <div class="dict-card">
+                <div class="dict-ms">Kat mana</div>
+                <div class="dict-bn">কোথায় (Di mana)</div>
+            </div>
+            <div class="dict-card">
+                <div class="dict-ms">Dah</div>
+                <div class="dict-bn">হয়ে গেছে (Sudah)</div>
+            </div>
+            <div class="dict-card">
+                <div class="dict-ms">Jom</div>
+                <div class="dict-bn">চলুন যাই (Mari)</div>
+            </div>
+            <div class="dict-card">
+                <div class="dict-ms">Macam mana / Camne</div>
+                <div class="dict-bn">কীভাবে (Bagaimana)</div>
+            </div>
+            <div class="dict-card">
+                <div class="dict-ms">Pigi / Pi</div>
+                <div class="dict-bn">যাওয়া (Pergi)</div>
+            </div>
+            <div class="dict-card">
+                <div class="dict-ms">Boleh</div>
+                <div class="dict-bn">পারা / সম্ভব</div>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    const els = { 
-        date:document.getElementById('date'), alert:document.getElementById('alert'), 
-        timer:document.getElementById('timer'), lbl:document.getElementById('lbl'), target:document.getElementById('target'),
-        timerBox: document.getElementById('timer-box'),
-        locStatus:document.getElementById('loc-status'), 
-        cards:{fajr:document.getElementById('c-fajr'), dhuhr:document.getElementById('c-dhuhr'), asr:document.getElementById('c-asr'), maghrib:document.getElementById('c-maghrib'), isha:document.getElementById('c-isha')} 
-    };
-    
-    let timerInterval = null; // Timer control variable
-    const RAMADAN_START = new Date('2026-02-19T00:00:00'); // Ramadan 2026
-
-    // --- RAKAT & NIYAT DATA ---
-    const prayerDetails = {
-        'Fajr': {
-            title: 'ফজর', total: 'মোট ৪ রাকাত',
-            rakats: [
-                {
-                    n: '২', t: 'সুন্নতে মুয়াক্কাদা', 
-                    ar: "নাওয়াইতু আন উসাল্লিয়া লিল্লাহি তাআলা রাকাতাই সালাতিল ফাজরি সুন্নাতা রাসূলিল্লাহি তাআলা মুতাওয়াজ্জিহান ইলা জিহাতিল কাবাতিশ শারীফাতি আল্লাহু আকবার।",
-                    bn: "অর্থ: আমি কিবলামুখী হয়ে আল্লাহর ওয়াস্তে ফজরের ২ রাকাত সুন্নাত নামাজ আদায়ের নিয়ত করলাম, আল্লাহু আকবার।"
-                },
-                {
-                    n: '২', t: 'ফরজ',
-                    ar: "নাওয়াইতু আন উসাল্লিয়া লিল্লাহি তাআলা রাকাতাই সালাতিল ফাজরি ফারদাল্লা হি তাআলা মুতাওয়াজ্জিহান ইলা জিহাতিল কাবাতিশ শারীফাতি আল্লাহু আকবার।",
-                    bn: "অর্থ: আমি কিবলামুখী হয়ে আল্লাহর ওয়াস্তে ফজরের ২ রাকাত ফরজ নামাজ আদায়ের নিয়ত করলাম, আল্লাহু আকবার।"
-                }
-            ]
-        },
-        'Dhuhr': {
-            title: 'জোহর', total: 'মোট ১২ রাকাত',
-            rakats: [
-                {
-                    n: '৪', t: 'সুন্নতে মুয়াক্কাদা',
-                    ar: "নাওয়াইতু আন উসাল্লিয়া লিল্লাহি তাআলা আরবাআ রাকাআতি সালাতিজ জোহরি সুন্নাতা রাসূলিল্লাহি তাআলা মুতাওয়াজ্জিহান ইলা জিহাতিল কাবাতিশ শারীফাতি আল্লাহু আকবার।",
-                    bn: "অর্থ: আমি কিবলামুখী হয়ে আল্লাহর ওয়াস্তে জোহরের ৪ রাকাত সুন্নাত নামাজ আদায়ের নিয়ত করলাম, আল্লাহু আকবার।"
-                }, 
-                {
-                    n: '৪', t: 'ফরজ',
-                    ar: "নাওয়াইতু আন উসাল্লিয়া লিল্লাহি তাআলা আরবাআ রাকাআতি সালাতিজ জোহরি ফারদাল্লা হি তাআলা মুতাওয়াজ্জিহান ইলা জিহাতিল কাবাতিশ শারীফাতি আল্লাহু আকবার।",
-                    bn: "অর্থ: আমি কিবলামুখী হয়ে আল্লাহর ওয়াস্তে জোহরের ৪ রাকাত ফরজ নামাজ আদায়ের নিয়ত করলাম, আল্লাহু আকবার।"
-                }, 
-                {
-                    n: '২', t: 'সুন্নতে মুয়াক্কাদা',
-                    ar: "নাওয়াইতু আন উসাল্লিয়া লিল্লাহি তাআলা রাকাতাই সালাতিজ জোহরি সুন্নাতা রাসূলিল্লাহি তাআলা মুতাওয়াজ্জিহান ইলা জিহাতিল কাবাতিশ শারীফাতি আল্লাহু আকবার।",
-                    bn: "অর্থ: আমি কিবলামুখী হয়ে আল্লাহর ওয়াস্তে জোহরের ২ রাকাত সুন্নাত নামাজ আদায়ের নিয়ত করলাম, আল্লাহু আকবার।"
-                }, 
-                {
-                    n: '২', t: 'নফল',
-                    ar: "নাওয়াইতু আন উসাল্লিয়া লিল্লাহি তাআলা রাকাতাই সালাতিজ জোহরি নাফলা লিল্লা হি তাআলা মুতাওয়াজ্জিহান ইলা জিহাতিল কাবাতিশ শারীফাতি আল্লাহু আকবার।",
-                    bn: "অর্থ: আমি কিবলামুখী হয়ে আল্লাহর ওয়াস্তে জোহরের ২ রাকাত নফল নামাজ আদায়ের নিয়ত করলাম, আল্লাহু আকবার।"
-                }
-            ]
-        },
-        'Asr': {
-            title: 'আসর', total: 'মোট ৮ রাকাত',
-            rakats: [
-                {
-                    n: '৪', t: 'সুন্নতে (গাইরে মুয়াক্কাদা)',
-                    ar: "নাওয়াইতু আন উসাল্লিয়া লিল্লাহি তাআলা আরবাআ রাকাআতি সালাতিল আসরি সুন্নাতা রাসূলিল্লাহি তাআলা মুতাওয়াজ্জিহান ইলা জিহাতিল কাবাতিশ শারীফাতি আল্লাহু আকবার।",
-                    bn: "অর্থ: আমি কিবলামুখী হয়ে আল্লাহর ওয়াস্তে আসরের ৪ রাকাত সুন্নাত নামাজ আদায়ের নিয়ত করলাম, আল্লাহু আকবার।"
-                }, 
-                {
-                    n: '৪', t: 'ফরজ',
-                    ar: "নাওয়াইতু আন উসাল্লিয়া লিল্লাহি তাআলা আরবাআ রাকাআতি সালাতিল আসরি ফারদাল্লা হি তাআলা মুতাওয়াজ্জিহান ইলা জিহাতিল কাবাতিশ শারীফাতি আল্লাহু আকবার।",
-                    bn: "অর্থ: আমি কিবলামুখী হয়ে আল্লাহর ওয়াস্তে আসরের ৪ রাকাত ফরজ নামাজ আদায়ের নিয়ত করলাম, আল্লাহু আকবার।"
-                }
-            ]
-        },
-        'Maghrib': {
-            title: 'মাগরিব', total: 'মোট ৭ রাকাত',
-            rakats: [
-                {
-                    n: '৩', t: 'ফরজ',
-                    ar: "নাওয়াইতু আন উসাল্লিয়া লিল্লাহি তাআলা সালাছা রাকাআতি সালাতিল মাগরিবি ফারদাল্লা হি তাআলা মুতাওয়াজ্জিহান ইলা জিহাতিল কাবাতিশ শারীফাতি আল্লাহু আকবার।",
-                    bn: "অর্থ: আমি কিবলামুখী হয়ে আল্লাহর ওয়াস্তে মাগরিবের ৩ রাকাত ফরজ নামাজ আদায়ের নিয়ত করলাম, আল্লাহু আকবার।"
-                }, 
-                {
-                    n: '২', t: 'সুন্নতে মুয়াক্কাদা',
-                    ar: "নাওয়াইতু আন উসাল্লিয়া লিল্লাহি তাআলা রাকাতাই সালাতিল মাগরিবি সুন্নাতা রাসূলিল্লাহি তাআলা মুতাওয়াজ্জিহান ইলা জিহাতিল কাবাতিশ শারীফাতি আল্লাহু আকবার।",
-                    bn: "অর্থ: আমি কিবলামুখী হয়ে আল্লাহর ওয়াস্তে মাগরিবের ২ রাকাত সুন্নাত নামাজ আদায়ের নিয়ত করলাম, আল্লাহু আকবার।"
-                }, 
-                {
-                    n: '২', t: 'নফল',
-                    ar: "নাওয়াইতু আন উসাল্লিয়া লিল্লাহি তাআলা রাকাতাই সালাতিল মাগরিবি নাফলা লিল্লা হি তাআলা মুতাওয়াজ্জিহান ইলা জিহাতিল কাবাতিশ শারীফাতি আল্লাহু আকবার।",
-                    bn: "অর্থ: আমি কিবলামুখী হয়ে আল্লাহর ওয়াস্তে মাগরিবের ২ রাকাত নফল নামাজ আদায়ের নিয়ত করলাম, আল্লাহু আকবার।"
-                }
-            ]
-        },
-        'Isha': {
-            title: 'এশা', total: 'মোট ১৫ রাকাত',
-            rakats: [
-                {
-                    n: '৪', t: 'সুন্নতে (গাইরে মুয়াক্কাদা)',
-                    ar: "নাওয়াইতু আন উসাল্লিয়া লিল্লাহি তাআলা আরবাআ রাকাআতি সালাতিল ইশায়ি সুন্নাতা রাসূলিল্লাহি তাআলা মুতাওয়াজ্জিহান ইলা জিহাতিল কাবাতিশ শারীফাতি আল্লাহু আকবার।",
-                    bn: "অর্থ: আমি কিবলামুখী হয়ে আল্লাহর ওয়াস্তে এশার ৪ রাকাত সুন্নাত নামাজ আদায়ের নিয়ত করলাম, আল্লাহু আকবার।"
-                }, 
-                {
-                    n: '৪', t: 'ফরজ',
-                    ar: "নাওয়াইতু আন উসাল্লিয়া লিল্লাহি তাআলা আরবাআ রাকাআতি সালাতিল ইশায়ি ফারদাল্লা হি তাআলা মুতাওয়াজ্জিহান ইলা জিহাতিল কাবাতিশ শারীফাতি আল্লাহু আকবার।",
-                    bn: "অর্থ: আমি কিবলামুখী হয়ে আল্লাহর ওয়াস্তে এশার ৪ রাকাত ফরজ নামাজ আদায়ের নিয়ত করলাম, আল্লাহু আকবার।"
-                }, 
-                {
-                    n: '২', t: 'সুন্নতে মুয়াক্কাদা',
-                    ar: "নাওয়াইতু আন উসাল্লিয়া লিল্লাহি তাআলা রাকাতাই সালাতিল ইশায়ি সুন্নাতা রাসূলিল্লাহি তাআলা মুতাওয়াজ্জিহান ইলা জিহাতিল কাবাতিশ শারীফাতি আল্লাহু আকবার।",
-                    bn: "অর্থ: আমি কিবলামুখী হয়ে আল্লাহর ওয়াস্তে এশার ২ রাকাত সুন্নাত নামাজ আদায়ের নিয়ত করলাম, আল্লাহু আকবার।"
-                }, 
-                {
-                    n: '২', t: 'নফল',
-                    ar: "নাওয়াইতু আন উসাল্লিয়া লিল্লাহি তাআলা রাকাতাই সালাতিল ইশায়ি নাফলা লিল্লা হি তাআলা মুতাওয়াজ্জিহান ইলা জিহাতিল কাবাতিশ শারীফাতি আল্লাহু আকবার।",
-                    bn: "অর্থ: আমি কিবলামুখী হয়ে আল্লাহর ওয়াস্তে এশার ২ রাকাত নফল নামাজ আদায়ের নিয়ত করলাম, আল্লাহু আকবার।"
-                }, 
-                {
-                    n: '৩', t: 'বিতর (ওয়াজিব)',
-                    ar: "নাওয়াইতু আন উসাল্লিয়া লিল্লাহি তাআলা সালাছা রাকাআতি সালাতিল বিতরি ওয়াজিবুল্লা হি তাআলা মুতাওয়াজ্জিহান ইলা জিহাতিল কাবাতিশ শারীফাতি আল্লাহু আকবার।",
-                    bn: "অর্থ: আমি কিবলামুখী হয়ে আল্লাহর ওয়াস্তে বিতরের ৩ রাকাত ওয়াজিব নামাজ আদায়ের নিয়ত করলাম, আল্লাহু আকবার।"
-                }
-            ]
-        }
-    };
-
-    // --- MODAL FUNCTIONS ---
-    let currentPrayerData = null;
-
-    function openDetails(pName) {
-        const data = prayerDetails[pName];
-        if(!data) return;
-        currentPrayerData = data;
-
-        document.getElementById('m-title').innerText = data.title;
-        document.getElementById('m-total').innerText = data.total;
-        
-        // Reset Display
-        document.getElementById('n-head').innerText = "নিয়ত";
-        document.getElementById('n-ar').innerText = "উপরে যেকোনো একটি রাকাতে ক্লিক করে তার নিয়ত দেখুন।";
-        document.getElementById('n-bn').innerText = "";
-
-        const listContainer = document.getElementById('m-list');
-        listContainer.innerHTML = ''; 
-
-        data.rakats.forEach((r, index) => {
-            const div = document.createElement('div');
-            div.className = 'rakat-item';
-            div.id = `r-item-${index}`;
-            div.onclick = () => showNiyat(index);
-            div.innerHTML = `<span>${r.t}</span> <span class="rakat-count">${r.n}</span>`;
-            listContainer.appendChild(div);
-        });
-
-        document.getElementById('modal').style.display = 'flex';
-        
-        // Auto-select the Fard rakat if available, else first one
-        const fardIndex = data.rakats.findIndex(r => r.t.includes('ফরজ'));
-        if(fardIndex !== -1) showNiyat(fardIndex);
-        else showNiyat(0);
+    // Tab Switching Logic
+    function openTab(tabName) {
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(tabName).classList.add('active');
+        event.currentTarget.classList.add('active');
     }
 
-    function showNiyat(index) {
-        if(!currentPrayerData) return;
-        const rakat = currentPrayerData.rakats[index];
-        
-        // Highlight active item
-        document.querySelectorAll('.rakat-item').forEach(el => el.classList.remove('selected'));
-        document.getElementById(`r-item-${index}`).classList.add('selected');
-
-        // Update Text
-        document.getElementById('n-head').innerText = `${rakat.n} রাকাত ${rakat.t} নিয়ত`;
-        document.getElementById('n-ar').innerText = rakat.ar;
-        document.getElementById('n-bn').innerText = rakat.bn;
-    }
-
-    function closeModal(e) {
-        if (e.target.id === 'modal') {
-            document.getElementById('modal').style.display = 'none';
-        }
-    }
-
-    // --- LOGIC ---
-    const savedData = localStorage.getItem('ramadan_data');
-    if (savedData) {
-        update(JSON.parse(savedData));
-        els.locStatus.innerText = "📍 অফলাইন মোড (সেভ করা ডেটা)";
-    }
-
-    if(navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            p => get(p.coords.latitude, p.coords.longitude), 
-            () => fallback()
-        );
-    } else fallback();
-
-    function fallback() {
-        if(!savedData) {
-            // Ampang Fallback Coordinates
-            els.locStatus.innerText = "📍 লোকেশন অফ (ডিফল্ট: আম্পাং)";
-            get(3.15, 101.76); 
-        }
-    }
-
-    function get(lat,lng) {
-        // Method 11 is JAKIM (Malaysia Government Standard)
-        fetch(`https://api.aladhan.com/v1/timings/${Math.floor(Date.now()/1000)}?latitude=${lat}&longitude=${lng}&method=11`)
-        .then(r=>r.json()).then(d=>{
-            localStorage.setItem('ramadan_data', JSON.stringify(d.data));
-            update(d.data);
-            if(navigator.geolocation) els.locStatus.innerText = `📍 ${d.data.meta.timezone} (JAKIM)`;
-        }).catch(()=>{
-            if(!savedData) els.locStatus.innerText = "ইন্টারনেট কানেকশন নেই";
-        });
-    }
-
-    function update(data) {
-        const t = data.timings;
-        const now = new Date();
-        els.date.innerText = now.toLocaleDateString('bn-BD', {weekday:'long',day:'numeric',month:'long',year:'numeric'});
-        
-        document.getElementById('fajr').innerText = fmt(t.Fajr); 
-        document.getElementById('dhuhr').innerText = fmt(t.Dhuhr);
-        document.getElementById('asr').innerText = fmt(t.Asr); 
-        document.getElementById('maghrib').innerText = fmt(t.Maghrib); 
-        document.getElementById('isha').innerText = fmt(t.Isha);
-
-        // Fixed Ramadan Days Calculation
-        const diffTime = now - RAMADAN_START;
-        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
-
-        const isRamadan = diffDays >= 1 && diffDays <= 30;
-
-        if(isRamadan) {
-            els.alert.style.display='block'; 
-            els.alert.innerText = `আজ ${diffDays}ম রোজা`; 
-            run(t, 'ramadan');
+    // Dark Mode Logic
+    function toggleTheme() {
+        const body = document.body;
+        const icon = document.getElementById('themeIcon');
+        if (body.getAttribute('data-theme') === 'dark') {
+            body.removeAttribute('data-theme');
+            icon.innerHTML = '<i class="fas fa-moon"></i>';
         } else {
-            els.alert.style.display='block';
-            run(t, 'normal'); 
+            body.setAttribute('data-theme', 'dark');
+            icon.innerHTML = '<i class="fas fa-sun" style="color:#facc15;"></i>';
         }
     }
 
-    function run(times, mode) {
-        // Stop any existing timer to prevent flickering
-        if(timerInterval) clearInterval(timerInterval);
+    // Translation Logic (API)
+    async function translateText() {
+        const text = document.getElementById('bengaliText').value;
+        const resultBox = document.getElementById('malayResult');
+        const loadingText = document.getElementById('loadingText');
 
-        timerInterval = setInterval(()=>{
-            const now = new Date();
-            const f=getD(times.Fajr), d=getD(times.Dhuhr), a=getD(times.Asr), m=getD(times.Maghrib), i=getD(times.Isha);
-            let trg, l, act;
+        if (!text.trim()) return;
 
-            if(mode==='ramadan') {
-                if(now<f){trg=f;l="সেহরির বাকি";act='fajr'} else if(now<d){trg=d;l="জোহরের বাকি";act='dhuhr'} else if(now<a){trg=a;l="আসরের বাকি";act='asr'} else if(now<m){trg=m;l="ইফতারের বাকি";act='maghrib'} else if(now<i){trg=i;l="এশার বাকি";act='isha'} else {trg=addD(f);l="সেহরির বাকি";act='fajr'}
-            } else {
-                if(now<f){trg=f;l="ফজরের বাকি";act='fajr'} else if(now<d){trg=d;l="জোহরের বাকি";act='dhuhr'} else if(now<a){trg=a;l="আসরের বাকি";act='asr'} else if(now<m){trg=m;l="মাগরিবের বাকি";act='maghrib'} else if(now<i){trg=i;l="এশার বাকি";act='isha'} else {trg=addD(f);l="ফজরের বাকি";act='fajr'}
-            }
+        loadingText.style.display = "block";
+        resultBox.innerText = "";
 
-            Object.values(els.cards).forEach(c=>c.classList.remove('active'));
-            if(act) els.cards[act].classList.add('active');
-
-            const diff = trg - now;
+        try {
+            const response = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=bn&tl=ms&dt=t&q=${encodeURIComponent(text)}`);
+            const data = await response.json();
             
-            // Safety check for negative diff (prevents glitches)
-            if (diff < 0) return;
+            let translatedText = "";
+            data[0].forEach(item => { translatedText += item[0]; });
 
-            const h=Math.floor((diff/3600000)%24), mn=Math.floor((diff/60000)%60), s=Math.floor((diff/1000)%60);
-            els.timer.innerText = `${pad(h)}:${pad(mn)}:${pad(s)}`;
-            els.lbl.innerText = l;
-            els.target.innerText = `ওয়াক্ত: ${trg.getHours()%12||12}:${pad(trg.getMinutes())}`;
-
-            // --- RED ALERT (LESS THAN 20 MIN) ---
-            if(diff < 1200000 && diff > 0) { 
-                els.timer.style.color = '#ef4444'; 
-                els.lbl.style.color = '#ef4444';
-                els.timerBox.style.borderColor = '#ef4444';
-            } else {
-                els.timer.style.color = '#fff';
-                els.lbl.style.color = '#fbbf24'; 
-                els.timerBox.style.borderColor = 'rgba(251, 191, 36, 0.3)';
-            }
-
-            if(mode !== 'ramadan') {
-                const rDiff = RAMADAN_START - now;
-                if(rDiff > 0) {
-                    const rD = Math.floor(rDiff / (1000 * 60 * 60 * 24));
-                    const rH = Math.floor((rDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const rM = Math.floor((rDiff % (1000 * 60 * 60)) / (1000 * 60));
-                    const rS = Math.floor((rDiff % (1000 * 60)) / 1000);
-                    els.alert.innerHTML = `রমজান শুরু হতে বাকি: <span class="num">${rD}d ${rH}h ${rM}m ${rS}s</span>`;
-                } else {
-                    els.alert.innerText = "🌙 রমজান মোবারক!";
-                }
-            }
-        }, 1000);
-    }
-
-    const aud=document.getElementById('audio'), bar=document.getElementById('bar'), btn=document.getElementById('play-btn');
-    const nowPlayingText = document.getElementById('now-playing');
-
-    const lastSrc = localStorage.getItem('last_src');
-    const lastTitle = localStorage.getItem('last_title');
-    const lastTime = localStorage.getItem('last_time');
-
-    if(lastSrc && lastTitle) {
-        bar.style.display='flex';
-        nowPlayingText.innerText = "Resume: " + lastTitle;
-        aud.src = lastSrc;
-        aud.currentTime = parseFloat(lastTime) || 0;
-        btn.innerText = '▶'; 
-    }
-
-    function play(u,n,e) {
-        document.querySelectorAll('.item').forEach(i=>i.style.border='none'); 
-        e.style.border='1px solid #fbbf24';
-        aud.src=u; aud.play(); 
-        bar.style.display='flex'; nowPlayingText.innerText=n; btn.innerText='❚❚';
-        localStorage.setItem('last_src', u);
-        localStorage.setItem('last_title', n);
-        
-        if ('mediaSession' in navigator) {
-            navigator.mediaSession.metadata = new MediaMetadata({title: n, artist: 'Ramadan Pro'});
-            navigator.mediaSession.setActionHandler('play', function() { aud.play(); });
-            navigator.mediaSession.setActionHandler('pause', function() { aud.pause(); });
+            resultBox.innerText = translatedText;
+        } catch (error) {
+            resultBox.innerText = "ইন্টারনেট কানেকশন চেক করুন।";
+            resultBox.style.color = "red";
+        } finally {
+            loadingText.style.display = "none";
         }
     }
 
-    function toggle(){ if(aud.paused){aud.play();btn.innerText='❚❚'}else{aud.pause();btn.innerText='▶'} }
+    // Voice Input Logic
+    function startDictation() {
+        if (window.hasOwnProperty('webkitSpeechRecognition')) {
+            var recognition = new webkitSpeechRecognition();
+            recognition.lang = "bn-BD";
+            recognition.start();
+            recognition.onresult = function(e) {
+                document.getElementById('bengaliText').value = e.results[0][0].transcript;
+                recognition.stop();
+                translateText();
+            };
+        } else {
+            alert("আপনার ব্রাউজার ভয়েস সাপোর্ট করে না।");
+        }
+    }
 
-    aud.addEventListener('timeupdate', () => { if(aud.currentTime>0) localStorage.setItem('last_time', aud.currentTime); });
-    aud.addEventListener('play', () => { btn.innerText='❚❚'; });
-    aud.addEventListener('pause', () => { btn.innerText='▶'; });
+    // Text to Speech Logic
+    function speakMalay(text) {
+        if (!text || text === "ফলাফল...") return;
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'ms-MY';
+        window.speechSynthesis.speak(msg);
+    }
 
-    function getD(t){const d=new Date();const[h,m]=t.split(':');d.setHours(h,m,0,0);return d}
-    function addD(d){const n=new Date(d);n.setDate(n.getDate()+1);return n}
-    function fmt(t){if(!t)return'--';let[h,m]=t.split(':');h=h%12||12;return`${h}:${pad(m)}`;}
-    function pad(n){return n.toString().padStart(2,'0')}
+    // Copy Text Logic
+    function copyText(text) {
+        if (!text || text === "ফলাফল...") return;
+        navigator.clipboard.writeText(text).then(() => {
+            alert("লেখাটি কপি করা হয়েছে!");
+        });
+    }
 </script>
+
 </body>
 </html>
